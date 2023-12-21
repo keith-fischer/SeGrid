@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException
 
 
 def pagewait(driver):
+    print(driver.title)
     # JavaScript to check if the page is idle
     js_script = """
     return (window.document.readyState === "complete" &&
@@ -14,15 +15,17 @@ def pagewait(driver):
     """
 
     try:
+        pass
         # Wait for the custom condition to become true
-        WebDriverWait(driver, 10).until(lambda driver: driver.execute_script(js_script))
+        WebDriverWait(driver, 20).until(lambda driver: driver.execute_script(js_script))
 
     except TimeoutException:
         print("Timeout waiting for the page to be idle.")
 
 
-def gridchrome(ver=None):
-    url = "http://localhost:4444"
+def gridchrome(ver=None, grid="http://localhost:4444"):
+    url = grid
+    print(ver, grid)
     options = webdriver.ChromeOptions()
     if ver:
         options.binary_location = f"C:/Users/fisch/ucsd/selenium_chrome/Se{ver}/chrome/chrome.exe"
@@ -33,33 +36,24 @@ def gridchrome(ver=None):
     options.add_argument("--window-size=800,600")
     options.add_argument("--window-position=10,10")
     driver = webdriver.Remote(command_executor=url, options=options)
-    driver.set_page_load_timeout(30)
+    driver.set_page_load_timeout(120)
+
     driver.get("https://map.google.com")
     pagewait(driver)
 
-    # driver.get("https://spotify.com")
-    # pagewait(driver)
-    driver.get("https://blink.ucsd.edu/")
+    driver.get("https://spotify.com")
     pagewait(driver)
-    driver.get("https://ucsd.edu")
+    driver.get("https://www.amazon.com/")
+    pagewait(driver)
+    driver.get("https://facebook.com/events/")
     pagewait(driver)
 
     driver.quit()
 
 
-if __name__ == '__main__':
-    gridchrome()
-    gridchrome("115")
-    gridchrome("116")
-    gridchrome("117")
-    gridchrome("118")
-    gridchrome("119")
-    gridchrome("120")
-    # gridfox()
-
-
-def gridfox():
-    url = "http://localhost:4444"
+def gridfox(ver=None, grid="http://localhost:4444"):
+    url = grid
+    print(ver, grid)
     options = webdriver.FirefoxOptions()
     options.add_argument("--browserName=firefox")
     options.add_argument("--platform=WINDOWS")
@@ -79,6 +73,30 @@ def gridfox():
     pagewait(driver)
 
     driver.quit()
+
+
+if __name__ == '__main__':
+    gridd="http://its-selenium-d.ucsd.edu:4444"
+    grid="http://its-selenium.ucsd.edu:4444"
+    gridfox(grid=gridd)
+    gridchrome(grid=gridd)
+    gridfox(grid=gridd)
+    gridchrome(grid=gridd)
+    gridfox(grid=gridd)
+    gridchrome(grid=gridd)
+    gridfox(grid=gridd)
+    gridchrome(grid=gridd)
+    gridfox(grid=gridd)
+    gridchrome(grid=gridd)
+    gridfox(grid=gridd)
+
+    # gridchrome("115")
+    # gridchrome("116")
+    # gridchrome("117")
+    # gridchrome("118")
+    # gridchrome("119")
+    # gridchrome("120")
+
 
 # def segrid1():
 #     # Replace with your Hub URL and port
